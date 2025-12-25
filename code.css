@@ -1,0 +1,265 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #111;
+  font-family: Arial, sans-serif;
+  color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Start / Game Over Screens */
+#startScreen,
+#gameOverScreen {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 20;
+}
+
+#startScreen h1 {
+  font-size: 60px;
+  margin-bottom: 10px;
+  letter-spacing: 4px;
+}
+
+#startScreen p {
+  margin-bottom: 20px;
+  font-size: 15px;
+  opacity: 0.8;
+}
+
+.btn {
+  padding: 10px 24px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #ff4444;
+  color: white;
+  transition: 0.2s;
+  margin: 5px 0;
+}
+
+.btn:hover {
+  background: #ff2222;
+}
+
+.btn.tiny {
+  font-size: 12px;
+  padding: 4px;
+}
+
+#modeButtons {
+  margin-top: 10px;
+  display: none;
+  flex-direction: column;
+}
+
+.modeSelectLabel {
+  margin-top: 8px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+#gameOverScreen {
+  display: none;
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+#gameOverScreen h1 {
+  font-size: 52px;
+  margin-bottom: 10px;
+}
+
+#gameOverScreen p {
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Countdown overlay */
+#countdownOverlay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 15;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+#countdownText {
+  font-size: 64px;
+  font-weight: bold;
+  text-shadow: 0 0 10px #000;
+}
+
+/* HUD */
+#hud {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  font-size: 16px;
+  z-index: 10;
+  text-shadow: 0 0 4px #000;
+}
+
+.hud-item span.label {
+  opacity: 0.7;
+  margin-right: 4px;
+}
+
+/* Training panel */
+#trainingPanel {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 12;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  padding: 10px;
+  display: none;
+  font-size: 13px;
+  width: 170px;
+}
+
+#trainingPanel h3 {
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+#trainingPanel button {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+/* Game World (box) */
+#world {
+  position: relative;
+  width: 800px;
+  height: 750px;
+  border: 5px solid #555;
+  background: radial-gradient(circle at center, #333, #111);
+  overflow: hidden;
+  transition: width 1s ease, height 1s ease; /* animated growth per wave */
+}
+
+/* Player car */
+#player {
+  position: absolute;
+  width: 70px;
+  height: 40px;
+  background: linear-gradient(90deg, #ff3b3b, #ffb300);
+  border-radius: 10px;
+  border: 3px solid #fff;
+  box-shadow: 0 0 12px rgba(255, 80, 80, 0.9);
+  transform-origin: center;
+}
+
+#playerLabel {
+  position: absolute;
+  top: -22px;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  font-weight: bold;
+  text-shadow: 0 0 5px black;
+}
+
+/* Enemy base style */
+.enemy {
+  position: absolute;
+  width: 60px;
+  height: 35px;
+  border-radius: 10px;
+  border: 2px solid #fff;
+  transform-origin: center;
+}
+
+.enemy.fast {
+  background: linear-gradient(90deg, #00e5ff, #0066ff);
+  box-shadow: 0 0 12px rgba(0, 180, 255, 0.9);
+}
+
+.enemy.charger {
+  background: linear-gradient(90deg, #9c27b0, #e040fb);
+  box-shadow: 0 0 12px rgba(224, 64, 251, 0.9);
+}
+
+.enemy.shooter {
+  background: linear-gradient(90deg, #4caf50, #aeea00);
+  box-shadow: 0 0 12px rgba(174, 234, 0, 0.9);
+}
+
+.enemy.exploder {
+  background: linear-gradient(90deg, #ff9100, #ff3d00);
+  box-shadow: 0 0 12px rgba(255, 61, 0, 0.9);
+}
+
+/* Bullets */
+.bullet {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #ffeb3b;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(255, 235, 59, 0.9);
+}
+
+/* Obstacles */
+.obstacle {
+  position: absolute;
+  background: #888;
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Spawn warning */
+.spawn-warning {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 3px solid red;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: warnPulse 1s ease-out forwards;
+}
+
+@keyframes warnPulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
